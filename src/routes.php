@@ -3,12 +3,19 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 
+use App\Praticien;
+
 // Routes
+$app->get('/praticiens', function (Request $request, Response $response, array $args) {
+    try {
+        $praticien = new \App\Praticien($this->db);
 
-$app->get('/[{name}]', function (Request $request, Response $response, array $args) {
-    // Sample log message
-    $this->logger->info("Slim-Skeleton '/' route");
+        $response->getBody()->write(json_encode('ok', JSON_UNESCAPED_UNICODE));
 
-    // Render index view
-    return $this->renderer->render($response, 'index.phtml', $args);
+
+    } catch (Exception $e) {
+        $response = 'ssks';
+    }
+
+    return $response;
 });
