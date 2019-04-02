@@ -5,6 +5,7 @@ use Slim\Http\Response;
 
 use App\Praticien;
 use App\Department;
+use App\Visiteur;
 
 // Routes
 $app->get('/praticiens', function (Request $request, Response $response, array $args) {
@@ -49,6 +50,40 @@ $app->get('/departement/praticien/{id}', function (Request $request, Response $r
         $datas = $departement->getPraticiensByDepartements(intval($id));
 
         $response->getBody()->write(json_encode($datas, JSON_UNESCAPED_UNICODE));
+    } catch (Exception $e) {
+        $response = $response->withJson([
+            'errorMess' => $e->getMessage(),
+            'errCode' => $e->getCode()
+        ]);
+    }
+
+    return $response;
+});
+
+$app->get('/collaborateurs', function (Request $request, Response $response, array $args) {
+    try {
+        $visiteur = new Visiteur($this->db);
+        $datas = $visiteur->getAllVisiteurs();
+
+        $response->getBody()->write(json_encode($datas, JSON_UNESCAPED_UNICODE));
+    } catch (Exception $e) {
+        $response = $response->withJson([
+            'errorMess' => $e->getMessage(),
+            'errCode' => $e->getCode()
+        ]);
+    }
+
+    return $response;
+});
+
+$app->get('/collaborateur/{id}', function (Request $request, Response $response, array $args) {
+    try {
+        $id = $args['id'];
+
+        $collaborateur = new Visiteur($this->db);
+        $data = $collaborateur->getOneVisiteur($id);
+
+        $response->getBody()->write(json_encode($data, JSON_UNESCAPED_UNICODE));
     } catch (Exception $e) {
         $response = $response->withJson([
             'errorMess' => $e->getMessage(),

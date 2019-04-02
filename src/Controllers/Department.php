@@ -19,18 +19,51 @@ class Department {
         $db = $this->db;
         /** @var $db PDO */
 
-        $query = "SELECT DISTINCT SUBSTR(PRA_CP, 1, 2) AS cp FROM praticien";
+        $query = "SELECT DISTINCT SUBSTR(PRA_CP, 1, 2) AS cp FROM praticien ORDER BY cp ASC";
 
         try {
             $stmt = $db->prepare($query);
-            $stmt->exxecute();
+            $stmt->execute();
 
-            $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            $data = $stmt->fetchAll(\PDO::FETCH_COLUMN);
+
+            $url = 'https://geo.api.gouv.fr/departements';
+            $curl = curl_init();
+
+            $opts = [
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_URL            => $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_TIMEOUT        => 30,
+                CURLOPT_CONNECTTIMEOUT => 30
+            ];
+
+            curl_setopt_array($curl, $opts);
+
+            $response = curl_exec($curl);
+            $results = json_decode($response);
+            $return = array();
+
+            if (!empty($data) && !empty($results)) {
+                foreach ($data as $key => $val) {
+                    foreach ($results as $result) {
+                        if($result->code == $data[$key]){
+                            $return[$key]['code'] = $result->code;
+                            $return[$key]['nom'] = $result->nom;
+                        }
+                    }
+                }
+                $data = $return;
+            } else {
+                $data = 'error';
+            }
+
+            return $data;
+
         } catch (\Exception $e) {
             $data = 'error';
+            return $data;
         }
-
-        return $data;
     }
 
     public function getPraticiensByDepartements($departement)
@@ -39,7 +72,13 @@ class Department {
         /** @var $db PDO */
 
         $departement = trim(strip_tags($departement));
-        $query = "SELECT * FROM praticien WHERE SUBSTR(PRA_CP, 1, 2) = :departement";
+        if (strlen($departement) == 1)
+            $departement = '0' . $departement;
+
+
+        $query = "SELECT * FROM praticien 
+                      INNER JOIN type_praticien ON praticien.TYP_CODE = type_praticien.TYP_CODE 
+                  WHERE SUBSTR(PRA_CP, 1, 2) = :departement";
 
         try {
             $stmt = $db->prepare($query);
