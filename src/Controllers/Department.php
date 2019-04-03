@@ -14,6 +14,10 @@ class Department {
         $this->db = $db;
     }
 
+    /**
+     * get all praticiens
+     * @return array|string
+     */
     public function getAllDepartementsPraticien()
     {
         $db = $this->db;
@@ -26,7 +30,7 @@ class Department {
             $stmt->execute();
 
             $data = $stmt->fetchAll(\PDO::FETCH_COLUMN);
-
+            // Récupération des noms de département via une API du gouvernement
             $url = 'https://geo.api.gouv.fr/departements';
             $curl = curl_init();
 
@@ -43,7 +47,7 @@ class Department {
             $response = curl_exec($curl);
             $results = json_decode($response);
             $return = array();
-
+            // Affectation du nom de département au datas de la DB
             if (!empty($data) && !empty($results)) {
                 foreach ($data as $key => $val) {
                     foreach ($results as $result) {
@@ -66,6 +70,11 @@ class Department {
         }
     }
 
+    /**
+     * Get all departements of one Departement
+     * @param $departement Departement ID
+     * @return array all praticiens to departement
+     */
     public function getPraticiensByDepartements($departement)
     {
         $db = $this->db;

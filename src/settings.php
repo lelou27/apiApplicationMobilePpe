@@ -16,6 +16,7 @@ return [
             'level' => \Monolog\Logger::DEBUG,
         ],
 
+        // Configuration database
         'db' => [
             'host' => 'localhost',
             'user' => 'root',

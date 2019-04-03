@@ -8,6 +8,9 @@ use App\Department;
 use App\Visiteur;
 
 // Routes
+/**
+ * Get all praticiens
+ */
 $app->get('/praticiens', function (Request $request, Response $response, array $args) {
     try {
         $praticien = new Praticien($this->db);
@@ -25,6 +28,9 @@ $app->get('/praticiens', function (Request $request, Response $response, array $
     return $response;
 });
 
+/**
+ * Get all departements
+ */
 $app->get('/departements', function (Request $request, Response $response, array $args) {
     try {
         $departement = new Department($this->db);
@@ -42,6 +48,10 @@ $app->get('/departements', function (Request $request, Response $response, array
     return $response;
 });
 
+/**
+ * Get one praticien by ID
+ * @param id Praticien ID
+ */
 $app->get('/departement/praticien/{id}', function (Request $request, Response $response, array $args) {
     try {
         $id = trim(strip_tags($args['id']));
@@ -60,6 +70,9 @@ $app->get('/departement/praticien/{id}', function (Request $request, Response $r
     return $response;
 });
 
+/**
+ * Get all collaborateurs
+ */
 $app->get('/collaborateurs', function (Request $request, Response $response, array $args) {
     try {
         $visiteur = new Visiteur($this->db);
@@ -76,6 +89,10 @@ $app->get('/collaborateurs', function (Request $request, Response $response, arr
     return $response;
 });
 
+/**
+ * Get one collaborateur by ID
+ * @param id Collaborateur ID
+ */
 $app->get('/collaborateur/{id}', function (Request $request, Response $response, array $args) {
     try {
         $id = $args['id'];

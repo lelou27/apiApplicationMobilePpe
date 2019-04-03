@@ -14,6 +14,10 @@ class Visiteur {
         $this->db = $db;
     }
 
+    /**
+     * Get all visiteurs
+     * @return array all Visiteurs
+     */
     public function getAllVisiteurs()
     {
         $db = $this->db;
@@ -36,6 +40,11 @@ class Visiteur {
         return $data;
     }
 
+    /**
+     * Get one visiteur by id
+     * @param $id visiteur id
+     * @return array one visiteur
+     */
     public function getOneVisiteur($id)
     {
         $db = $this->db;

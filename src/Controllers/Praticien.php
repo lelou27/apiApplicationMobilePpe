@@ -14,6 +14,10 @@ class Praticien {
         $this->db = $db;
     }
 
+    /**
+     * Get all praticiens
+     * @return array $data
+     */
     public function getAllPraticiens()
     {
         $db = $this->db;
