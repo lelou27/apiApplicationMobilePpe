@@ -1,27 +1,14 @@
-# Slim Framework 3 Skeleton Application
+# Api pour application mobile GSB
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 3 application. This application uses the latest Slim 3 with the PHP-View template renderer. It also uses the Monolog logger.
+Création d'une API pour l'exploitation de données dans l'application mobile GSB 
+développé en React native
 
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+## Technologie
 
-## Install the Application
-
-Run this command from the directory in which you want to install your new Slim Framework application.
+Cette API a été réalisé à l'aide du framework Slim Framework, pour créer une application Slim Framework :
 
     php composer.phar create-project slim/slim-skeleton [my-app-name]
 
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
+Remplacer `[my-app-name]` par le nom désiré de l'application
 
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writeable.
-
-To run the application in development, you can run these commands 
-
-	cd [my-app-name]
-	php composer.phar start
-
-Run this command in the application directory to run the test suite
-
-	php composer.phar test
-
-That's it! Now go build something cool.
+La documentation est disponnible ici : http://www.slimframework.com/docs/
